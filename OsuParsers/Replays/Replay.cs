@@ -39,8 +39,11 @@ namespace OsuParsers.Replays
                 {
                     case Ruleset.Standard:
                         var totalObjects = Count300 + Count100 + Count50 + CountMiss;
+                        var maxValue = totalObjects * 300;
+
                         var valueUnweighted = (Count300 * 300) + (Count100 * 100) + (Count50 * 50);
-                        return (float)totalObjects / valueUnweighted;
+
+                        return 100f * valueUnweighted / maxValue;
                     default:
                         throw new NotImplementedException($"Accuracy for => {Ruleset}");
                 }
