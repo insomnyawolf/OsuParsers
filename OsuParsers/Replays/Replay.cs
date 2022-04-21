@@ -30,6 +30,23 @@ namespace OsuParsers.Replays
         public int Seed { get; set; }
         public long OnlineId { get; set; }
 
+        // https://osu.ppy.sh/wiki/en/Gameplay/Accuracy
+        public float Accuracy
+        {
+            get
+            {
+                switch (Ruleset)
+                {
+                    case Ruleset.Standard:
+                        var totalObjects = Count300 + Count100 + Count50 + CountMiss;
+                        var valueUnweighted = (Count300 * 300) + (Count100 * 100) + (Count50 * 50);
+                        return (float)totalObjects / valueUnweighted;
+                    default:
+                        throw new NotImplementedException($"Accuracy for => {Ruleset}");
+                }
+            }
+        }
+
         /// <summary>
         /// Saves this <see cref="Replay"/> to the specified path.
         /// </summary>
